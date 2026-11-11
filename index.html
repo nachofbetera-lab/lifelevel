@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="description" content="LIFE LEVEL — Convierte tus objetivos en misiones.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>LIFE LEVEL</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0b0c;--panel:#141416;--panel2:#1b1b1e;--line:#303034;--text:#f2f0ec;--muted:#9b9994;--silver:#c9c6bf;--soft:#77756f;--gold:#b8a987;--good:#d7d4cc;--danger:#b9a4a4}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;letter-spacing:.005em}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.025),transparent 35%,rgba(255,255,255,.012));z-index:-1}
+button,input,select{font:inherit}button{cursor:pointer}.wrap{max-width:1040px;margin:auto;padding:28px 20px 90px}
+header{display:flex;justify-content:space-between;align-items:center;gap:14px;margin:4px 0 30px}.brand{font-weight:750;letter-spacing:.24em;font-size:17px}.brand span{color:var(--silver)}.eyebrow{color:var(--soft);font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+.level-card{position:relative;overflow:hidden;background:linear-gradient(135deg,#1a1a1c,#111113 70%);border:1px solid #38383b;border-radius:22px;padding:26px;box-shadow:0 24px 70px #0008}
+.level-card:after{content:"";position:absolute;width:300px;height:300px;border:1px solid #ffffff0a;border-radius:50%;right:-120px;top:-170px;box-shadow:0 0 0 28px #ffffff05,0 0 0 58px #ffffff03}
+.level-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;position:relative;z-index:1}.rank{font-size:10px;color:var(--silver);letter-spacing:.2em;font-weight:800}.level{font-size:42px;font-weight:650;letter-spacing:-.055em;line-height:1.05;margin:8px 0}.muted{color:var(--muted)}.stats{display:flex;gap:9px;flex-wrap:wrap}.stat{background:#ffffff08;border:1px solid #ffffff16;border-radius:12px;padding:11px 14px;min-width:94px}.stat b{display:block;font-size:20px;font-weight:650;letter-spacing:-.04em}.stat small{color:var(--muted);font-size:9px;letter-spacing:.14em}.progress{height:4px;background:#ffffff17;border-radius:10px;overflow:hidden;margin:21px 0 5px;position:relative;z-index:1}.progress span{height:100%;display:block;background:linear-gradient(90deg,#77756f,#e2dfd8);border-radius:10px;width:0;transition:width .3s}
+.character-card{display:flex;align-items:center;gap:17px;margin:14px 0 22px;padding:16px 18px;background:#111113;border:1px solid var(--line);border-radius:18px}.mascot{width:76px;height:76px;flex:none;border-radius:50%;background:linear-gradient(145deg,#29292c,#111113);border:1px solid #55545a;display:grid;place-items:center}.character-copy{flex:1;min-width:0}.character-copy strong{font-size:16px;letter-spacing:.015em}.character-copy p{margin:3px 0 0;color:var(--muted);font-size:12px}.character-level{font-size:11px;letter-spacing:.12em;color:var(--silver);margin-top:7px;text-transform:uppercase}
+.tabs{display:flex;gap:5px;overflow:auto;margin:22px 0 18px;padding:0 0 7px;border-bottom:1px solid var(--line)}.tab{border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);padding:11px 15px 12px;white-space:nowrap;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.tab.active{color:var(--text);border-bottom-color:var(--silver)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:19px;margin:13px 0}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.section-head h2{font-size:17px;font-weight:600;letter-spacing:-.02em;margin:0}.btn{border:1px solid #d8d5ce;background:#e6e3dc;color:#141414;border-radius:9px;padding:10px 15px;font-weight:700;font-size:12px;letter-spacing:.04em;transition:.18s}.btn:hover{background:#fff}.btn.secondary{background:#202023;color:var(--text);border:1px solid #424246}.btn.secondary:hover{background:#2b2b2f}.btn.danger{background:#211d1e;color:#d8c4c4;border:1px solid #574647}.btn.small{padding:7px 10px;font-size:10px}
+.mission{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid #29292c}.mission:first-of-type{border-top:0}.check{width:24px;height:24px;flex:none;border:1px solid #77767a;border-radius:50%;background:transparent;color:#111;font-weight:800}.mission.done .check{background:#d8d5ce;border-color:#d8d5ce}.mission.done .m-title{text-decoration:line-through;color:#888}.m-main{flex:1;min-width:0}.m-title{font-weight:600}.m-meta{color:var(--muted);font-size:10px;margin-top:4px}.pill{display:inline-block;padding:3px 8px;border-radius:20px;background:#242427;color:#c4c1ba;font-size:9px;letter-spacing:.04em;margin-right:4px}.reward{display:flex;justify-content:space-between;align-items:center;gap:12px;border-top:1px solid #29292c;padding:13px 0}.reward:first-of-type{border:0}.empty{text-align:center;color:var(--muted);padding:28px 8px;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mini{background:#111113;border:1px solid var(--line);border-radius:13px;padding:15px}.mini b{font-size:22px;font-weight:650;letter-spacing:-.04em;display:block}.mini small{color:var(--muted);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+input,select{width:100%;background:#101012;border:1px solid #414145;color:var(--text);border-radius:9px;padding:11px;outline:none}input:focus,select:focus{border-color:#aaa69c}label{display:block;color:var(--muted);font-size:11px;margin:10px 0 5px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.form-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}.hidden{display:none!important}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#e8e5de;color:#111;padding:11px 17px;border-radius:9px;font-weight:700;font-size:12px;box-shadow:0 8px 30px #0008;z-index:5}
+footer{text-align:center;color:#65636a;font-size:10px;letter-spacing:.08em;margin-top:28px}
+dialog{background:#171719!important;color:var(--text)!important;border:1px solid #48484c!important;border-radius:16px!important;box-shadow:0 25px 90px #000b}dialog::backdrop{background:#000b}
+@media(max-width:600px){.wrap{padding:16px 13px 80px}.level-card{padding:19px}.level{font-size:35px}.level-top{display:block}.stats{margin-top:18px}.stat{flex:1;min-width:0;padding:9px}.stat b{font-size:17px}.character-card{padding:13px;gap:12px}.mascot{width:64px;height:64px}.grid{grid-template-columns:1fr 1fr}.section-head{align-items:flex-start}.section-head h2{font-size:16px}.form-grid{grid-template-columns:1fr}.tabs{gap:0}.tab{padding-left:11px;padding-right:11px;font-size:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div><div class="eyebrow">TU PROGRESO · TU CAMINO</div><div class="brand">LIFE <span>LEVEL</span></div></div><button class="btn secondary small" id="settingsBtn">⚙ Ajustes</button></header>
+<section class="level-card">
+ <div class="level-top"><div><div class="rank" id="rank">RANGO E · INICIADO</div><div class="level">Nivel <span id="level">1</span></div><div class="muted" id="nextText">0 / 100 XP para el siguiente nivel</div></div>
+ <div class="stats"><div class="stat"><b id="xp">0</b><small>XP TOTAL</small></div><div class="stat"><b id="coins">0</b><small>MONEDAS</small></div><div class="stat"><b id="streak">0 🔥</b><small>RACHA</small></div></div></div>
+ <div class="progress"><span id="xpBar"></span></div>
+</section>
+<section class="character-card" aria-label="Tu personaje y racha">
+ <div class="mascot" aria-hidden="true">
+  <svg viewBox="0 0 100 100" width="62" height="62" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M24 39c0-17 11-28 26-28s26 11 26 28v9H24v-9Z" fill="#D8D5CE"/>
+   <path d="M18 46h64v7H18z" fill="#8E8B84"/>
+   <path d="M29 52c0-7 9-12 21-12s21 5 21 12v18c0 12-9 20-21 20S29 82 29 70V52Z" fill="#D8D5CE"/>
+   <path d="M39 59c3-3 7-3 10 0M54 59c3-3 7-3 10 0" stroke="#242427" stroke-width="3" stroke-linecap="round"/>
+   <path d="M39 69c4-5 7-5 11 0 4-5 7-5 11 0-2 8-7 11-11 11s-9-3-11-11Z" fill="#29292C"/>
+   <circle cx="65" cy="57" r="7" stroke="#77756F" stroke-width="2"/><path d="M70 62l5 5" stroke="#77756F" stroke-width="2" stroke-linecap="round"/>
+   <path d="M44 87h12" stroke="#77756F" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+ </div>
+ <div class="character-copy"><div class="eyebrow">TU IDENTIDAD DE PROGRESO</div><strong>PRIME</strong><p id="characterMessage">No busca excusas. Busca que vuelvas mañana.</p><div class="character-level" id="characterLevel">Nivel 0 · En ascenso</div></div>
+</section>
+<nav class="tabs" aria-label="Secciones">
+<button class="tab active" data-tab="missions">⚔ Misiones</button><button class="tab" data-tab="shop">🛒 Tienda</button><button class="tab" data-tab="stats">📊 Estadísticas</button><button class="tab" data-tab="settings">⚙ Datos</button>
+</nav>
+<main>
+<section id="missions">
+ <div class="section-head"><div><div class="eyebrow">HOY ES TU OPORTUNIDAD</div><h2>Misiones activas</h2><div class="muted" id="dailyStatus" style="font-size:11px;margin-top:5px">Completa todas tus misiones diarias para mantener la racha de PRIME.</div></div><button class="btn" id="addMission">＋ Nueva misión</button></div>
+ <div class="panel"><div class="section-head"><h2>Diarias</h2><span class="pill" id="dailyCount">0/0</span></div><div id="dailyList"></div></div>
+ <div class="panel"><div class="section-head"><h2>Semanales</h2><span class="pill" id="weeklyCount">0/0</span></div><div id="weeklyList"></div></div>
+ <div class="panel"><div class="section-head"><h2>Únicas</h2><span class="pill" id="onceCount">0/0</span></div><div id="onceList"></div></div>
+</section>
+<section id="shop" class="hidden"><div class="section-head"><div><div class="eyebrow">GÁNATE TUS RECOMPENSAS</div><h2>Tienda personal</h2></div><button class="btn" id="addReward">＋ Añadir</button></div><div class="panel"><div id="rewardList"></div></div></section>
+<section id="stats" class="hidden"><div class="eyebrow">TU EVOLUCIÓN</div><h2>Estadísticas</h2><div class="grid" id="statsGrid"></div><div class="panel"><h2>Últimos logros</h2><div id="history"></div></div></section>
+<section id="settings" class="hidden"><div class="eyebrow">TU CUENTA, TUS DATOS</div><h2>Datos y copias de seguridad</h2><div class="panel"><p class="muted">Tu progreso se guarda en este dispositivo. Exporta una copia para no perderlo o impórtala en otro móvil.</p><div class="form-actions"><button class="btn" id="exportBtn">Exportar progreso</button><button class="btn secondary" id="importBtn">Importar copia</button><input class="hidden" id="importFile" type="file" accept="application/json"></div><hr style="border-color:#25334d;margin:18px 0"><p class="muted">Puedes borrar todos los datos y empezar desde cero. Esta acción no se puede deshacer.</p><button class="btn danger" id="resetBtn">Borrar progreso</button></div></section>
+</main>
+<footer>LIFE LEVEL · DISCIPLINA CON INTENCIÓN · TUS DATOS PERMANECEN EN TU DISPOSITIVO</footer>
+</div>
+<div id="toast" class="toast hidden"></div>
+<dialog id="missionDialog" style="background:#111a2b;color:#f3f6ff;border:1px solid #344867;border-radius:18px;width:min(520px,calc(100% - 24px));padding:20px">
+<h2 id="missionDialogTitle">Nueva misión</h2><form id="missionForm">
+<label>Nombre de la misión</label><input id="missionName" maxlength="70" required placeholder="Ej. Leer 10 páginas">
+<div class="form-grid"><div><label>Categoría</label><select id="missionCategory"><option>Deporte</option><option>Estudios</option><option>Salud</option><option>Disciplina</option><option>Mentalidad</option><option>Personal</option></select></div><div><label>Frecuencia</label><select id="missionFrequency"><option value="daily">Diaria</option><option value="weekly">Semanal</option><option value="once">Única</option></select></div><div><label>XP al completar</label><input id="missionXP" type="number" min="1" max="500" value="20" required></div><div><label>Monedas</label><input id="missionCoins" type="number" min="0" max="500" value="10" required></div></div>
+<div class="form-actions"><button class="btn" type="submit">Guardar misión</button><button class="btn secondary" type="button" id="cancelMission">Cancelar</button></div></form></dialog>
+<dialog id="rewardDialog" style="background:#111a2b;color:#f3f6ff;border:1px solid #344867;border-radius:18px;width:min(480px,calc(100% - 24px));padding:20px"><h2>Nueva recompensa</h2><form id="rewardForm"><label>Nombre</label><input id="rewardName" required maxlength="70" placeholder="Ej. Una tarde de videojuegos"><label>Precio en monedas</label><input id="rewardPrice" type="number" min="1" max="100000" value="100" required><div class="form-actions"><button class="btn" type="submit">Añadir</button><button class="btn secondary" type="button" id="cancelReward">Cancelar</button></div></form></dialog>
+<script>
+const KEY='life-level-independent-v1';
+const defaults={
+ missions:[
+ {id:'m1',name:'50 flexiones',category:'Deporte',frequency:'daily',xp:20,coins:10,done:false,doneAt:null},
+ {id:'m2',name:'Estudiar 1 hora',category:'Estudios',frequency:'daily',xp:25,coins:12,done:false,doneAt:null},
+ {id:'m3',name:'Leer 10 páginas',category:'Mentalidad',frequency:'daily',xp:15,coins:8,done:false,doneAt:null},
+ {id:'m4',name:'Ordenar mi habitación',category:'Disciplina',frequency:'weekly',xp:30,coins:15,done:false,doneAt:null}
+ ],
+ rewards:[{id:'r1',name:'Una hora de videojuegos',price:100},{id:'r2',name:'Elegir la película',price:60},{id:'r3',name:'Un pequeño capricho',price:150}],
+ xp:0,coins:0,completed:0,history:[],lastComplete:null,streak:0,streakDates:[]
+};
+let state=load(), editingId=null;
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY));return x&&Array.isArray(x.missions)&&Array.isArray(x.rewards)?x:structuredClone(defaults)}catch{return structuredClone(defaults)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function dateKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function weekKey(d=new Date()){const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return dateKey(x)}
+function resetRecurring(){const today=dateKey(),week=weekKey();let changed=false;state.missions.forEach(m=>{if(m.frequency==='daily'&&m.doneAt!==today){m.done=false;changed=true}if(m.frequency==='weekly'&&m.doneWeek!==week){m.done=false;changed=true}});if(changed)localStorage.setItem(KEY,JSON.stringify(state))}
+function levelInfo(){const level=Math.floor(state.xp/100)+1;return {level,within:state.xp%100,rank:level>=20?'S':level>=15?'A':level>=10?'B':level>=5?'C':'E'}}
+function updateRachonStreak(){
+ if(!Array.isArray(state.streakDates))state.streakDates=[];
+ const daily=state.missions.filter(m=>m.frequency==='daily');
+ const today=dateKey();
+ if(daily.length && daily.every(m=>m.done)) {
+  if(!state.streakDates.includes(today))state.streakDates.push(today);
+ } else { state.streakDates=state.streakDates.filter(d=>d!==today); }
+ state.streakDates=[...new Set(state.streakDates)].sort().slice(-400);
+ let count=0, cursor=new Date();
+ if(!state.streakDates.includes(dateKey(cursor)))cursor.setDate(cursor.getDate()-1);
+ while(state.streakDates.includes(dateKey(cursor))){count++;cursor.setDate(cursor.getDate()-1);}
+ state.streak=count;
+}
+function rachonTitle(n){return n>=100?'Leyenda de la constancia':n>=30?'PRIME Supremo':n>=14?'Prime Élite':n>=7?'Prime de honor':n>=3?'Prime Inicial':'En ascenso';}
+function render(){
+ const l=levelInfo();document.getElementById('level').textContent=l.level;document.getElementById('xp').textContent=state.xp;document.getElementById('coins').textContent=state.coins;updateRachonStreak();document.getElementById('streak').textContent=state.streak+' días';
+ document.getElementById('characterLevel').textContent=`Nivel ${Math.floor(state.streak/7)+1} · ${rachonTitle(state.streak)}`;
+ document.getElementById('characterMessage').textContent=state.streak===0?'PRIME está esperando tu primera jornada completa.':state.streak<7?'Buen comienzo. La constancia se construye un día cada vez.':state.streak<30?'PRIME empieza a estar orgulloso. No rompas el ritmo.':'Esto ya es disciplina de leyenda. PRIME se quita el sombrero.';
+ const dailyMissions=state.missions.filter(m=>m.frequency==='daily');const dailyDone=dailyMissions.filter(m=>m.done).length;
+ document.getElementById('dailyStatus').textContent=dailyMissions.length?`${dailyDone}/${dailyMissions.length} misiones diarias completadas · ${dailyDone===dailyMissions.length?'¡Racha de hoy asegurada!':'Completa todas para sumar un día a tu racha de PRIME.'}`:'Añade misiones diarias para empezar tu racha con PRIME.';document.getElementById('rank').textContent=`RANGO ${l.rank} · ${({S:'ÉLITE',A:'MAESTRO',B:'AVANZADO',C:'EXPERTO',E:'INICIADO'})[l.rank]}`;document.getElementById('nextText').textContent=`${l.within} / 100 XP para el siguiente nivel`;document.getElementById('xpBar').style.width=l.within+'%';
+ ['daily','weekly','once'].forEach(f=>{const list=state.missions.filter(m=>m.frequency===f),done=list.filter(m=>m.done).length;document.getElementById(f+'Count').textContent=`${done}/${list.length}`;document.getElementById(f+'List').innerHTML=list.length?list.map(m=>`<div class="mission ${m.done?'done':''}"><button class="check" data-check="${m.id}" aria-label="Completar">${m.done?'✓':''}</button><div class="m-main"><div class="m-title">${esc(m.name)}</div><div class="m-meta"><span class="pill">${esc(m.category)}</span>+${m.xp} XP · +${m.coins} monedas</div></div><button class="btn secondary small" data-edit="${m.id}">Editar</button><button class="btn danger small" data-delete="${m.id}">×</button></div>`).join(''):'<div class="empty">Todavía no hay misiones aquí.</div>'});
+ document.getElementById('rewardList').innerHTML=state.rewards.length?state.rewards.map(r=>`<div class="reward"><div><b>${esc(r.name)}</b><div class="m-meta">${r.price} monedas</div></div><div style="display:flex;gap:7px"><button class="btn small" data-buy="${r.id}" ${state.coins<r.price?'disabled style="opacity:.45"':''}>Canjear</button><button class="btn danger small" data-delreward="${r.id}">×</button></div></div>`).join(''):'<div class="empty">Añade tu primera recompensa.</div>';
+ document.getElementById('statsGrid').innerHTML=[['Misiones completadas',state.completed],['XP acumulada',state.xp],['Monedas disponibles',state.coins],['Racha de PRIME',state.streak+' días']].map(a=>`<div class="mini"><b>${a[1]}</b><small>${a[0]}</small></div>`).join('');
+ document.getElementById('history').innerHTML=state.history.length?state.history.slice(0,12).map(h=>`<div class="reward"><span>${esc(h.text)}</span><small class="muted">${esc(h.date)}</small></div>`).join(''):'<div class="empty">Tus logros aparecerán aquí.</div>';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toast(s){const t=document.getElementById('toast');t.textContent=s;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),1900)}
+function addHistory(text){state.history.unshift({text,date:dateKey()});state.history=state.history.slice(0,40)}
+function complete(id){const m=state.missions.find(x=>x.id===id);if(!m)return;if(m.done){m.done=false;if(m.frequency==='once')m.doneAt=null;state.xp=Math.max(0,state.xp-m.xp);state.coins=Math.max(0,state.coins-m.coins);state.completed=Math.max(0,state.completed-1);toast('Misión desmarcada');}else{m.done=true;m.doneAt=dateKey();if(m.frequency==='weekly')m.doneWeek=weekKey();state.xp+=m.xp;state.coins+=m.coins;state.completed++;const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);if(state.lastComplete===dateKey(yesterday)||state.lastComplete===dateKey())state.streak=Math.max(1,state.streak);else state.streak=1;state.lastComplete=dateKey();addHistory(`Completada: ${m.name} (+${m.xp} XP)`);toast(`+${m.xp} XP · +${m.coins} monedas`)}updateRachonStreak();save()}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.tab){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));['missions','shop','stats','settings'].forEach(id=>document.getElementById(id).classList.toggle('hidden',id!==b.dataset.tab))}
+if(b.dataset.check)complete(b.dataset.check);
+if(b.dataset.edit){const m=state.missions.find(x=>x.id===b.dataset.edit);if(m){editingId=m.id;document.getElementById('missionDialogTitle').textContent='Editar misión';missionName.value=m.name;missionCategory.value=m.category;missionFrequency.value=m.frequency;missionXP.value=m.xp;missionCoins.value=m.coins;missionDialog.showModal()}}
+if(b.dataset.delete&&confirm('¿Eliminar esta misión?')){state.missions=state.missions.filter(x=>x.id!==b.dataset.delete);save()}
+if(b.dataset.buy){const r=state.rewards.find(x=>x.id===b.dataset.buy);if(r&&state.coins>=r.price&&confirm(`¿Canjear "${r.name}" por ${r.price} monedas?`)){state.coins-=r.price;addHistory(`Canjeada recompensa: ${r.name}`);save();toast('¡Recompensa canjeada!')}}
+if(b.dataset.delreward&&confirm('¿Eliminar esta recompensa?')){state.rewards=state.rewards.filter(x=>x.id!==b.dataset.delreward);save()}
+});
+const missionDialog=document.getElementById('missionDialog'),missionName=document.getElementById('missionName');
+document.getElementById('addMission').onclick=()=>{editingId=null;document.getElementById('missionDialogTitle').textContent='Nueva misión';document.getElementById('missionForm').reset();missionDialog.showModal()};
+document.getElementById('cancelMission').onclick=()=>missionDialog.close();
+document.getElementById('missionForm').onsubmit=e=>{e.preventDefault();const m={id:editingId||crypto.randomUUID(),name:missionName.value.trim(),category:missionCategory.value,frequency:missionFrequency.value,xp:+missionXP.value,coins:+missionCoins.value,done:false,doneAt:null};if(editingId){const old=state.missions.find(x=>x.id===editingId);Object.assign(old,m,{done:old.done,doneAt:old.doneAt,doneWeek:old.doneWeek})}else state.missions.push(m);missionDialog.close();save();toast('Misión guardada')};
+const rewardDialog=document.getElementById('rewardDialog');
+document.getElementById('addReward').onclick=()=>{document.getElementById('rewardForm').reset();rewardDialog.showModal()};
+document.getElementById('cancelReward').onclick=()=>rewardDialog.close();
+document.getElementById('rewardForm').onsubmit=e=>{e.preventDefault();state.rewards.push({id:crypto.randomUUID(),name:rewardName.value.trim(),price:+rewardPrice.value});rewardDialog.close();save()};
+document.getElementById('settingsBtn').onclick=()=>document.querySelector('[data-tab="settings"]').click();
+document.getElementById('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='life-level-progreso.json';a.click();URL.revokeObjectURL(a.href);toast('Copia descargada')};
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const x=JSON.parse(await f.text());if(!Array.isArray(x.missions)||!Array.isArray(x.rewards)||typeof x.xp!=='number')throw Error();state=x;save();toast('Progreso importado')}catch{alert('El archivo no parece una copia válida de LIFE LEVEL')}e.target.value=''};
+document.getElementById('resetBtn').onclick=()=>{if(confirm('¿Seguro que quieres borrar TODO tu progreso?')){state=structuredClone(defaults);save();toast('Progreso reiniciado')}};
+resetRecurring();render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>
